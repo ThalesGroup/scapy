@@ -347,7 +347,8 @@ class DCERPC_Client(object):
             else:
                 # Call the underlying SSP
                 self.sspcontext, token, status = self.ssp.GSS_Init_sec_context(
-                    self.sspcontext, val=resp.auth_verifier.auth_value
+                    self.sspcontext,
+                    token=resp.auth_verifier.auth_value,
                 )
             if status in [GSS_S_CONTINUE_NEEDED, GSS_S_COMPLETE]:
                 # Authentication should continue
@@ -388,7 +389,8 @@ class DCERPC_Client(object):
                             status = GSS_S_COMPLETE
                             break
                         self.sspcontext, token, status = self.ssp.GSS_Init_sec_context(
-                            self.sspcontext, val=resp.auth_verifier.auth_value
+                            self.sspcontext,
+                            token=resp.auth_verifier.auth_value,
                         )
         # Check context acceptance
         if (
@@ -490,6 +492,7 @@ class DCERPC_Client(object):
         ip,
         interface,
         port=None,
+        timeout=5,
         smb_kwargs={},
     ):
         """
@@ -527,7 +530,7 @@ class DCERPC_Client(object):
             else:
                 return
             # 2. connect to the SMB server
-            self.connect(ip, port=port, smb_kwargs=smb_kwargs)
+            self.connect(ip, port=port, timeout=timeout, smb_kwargs=smb_kwargs)
             # 3. open the new named pipe
             self.open_smbpipe(pipename)
         # Bind in RPC
