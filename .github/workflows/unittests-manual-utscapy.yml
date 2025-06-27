@@ -34,6 +34,8 @@ jobs:
   utscapy:
     runs-on: ${{ github.event.inputs.os }}
     steps:
+      - name: Display inputs
+        run: echo "os=${{ github.event.inputs.os }}" && echo "python=${{ github.event.inputs.python }}" && echo "mode=${{ github.event.inputs.mode }}" && echo "installmode=${{ github.event.inputs.installmode }}" && echo "flags=${{ github.event.inputs.flags }}"
       - name: Checkout Scapy
         uses: actions/checkout@v4
         # Codecov requires a fetch-depth > 1
