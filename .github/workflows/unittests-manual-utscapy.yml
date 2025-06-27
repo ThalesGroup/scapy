@@ -45,12 +45,24 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ github.event.inputs.python }}
-      - name: Install Tox and any other packages
+      - name: Install Tox and any other packages (linux/osx)
         run: ./.config/ci/install.sh ${{ github.event.inputs.installmode }}
-      - name: Run Tox
-        run: UT_FLAGS="${{ github.event.inputs.flags }}" ./.config/ci/test.sh ${{ github.event.inputs.python }} ${{ github.event.inputs.mode }}
+        if: ${{ ! contains(github.event.inputs.os, 'windows') }}
+      - name: Install Tox and any other packages (win)
+        run: ./.config/ci/install.ps1
+        if: ${{ contains(github.event.inputs.os, 'windows') }}
+      - name: Run Tox (linux/osx)
+        run: ./.config/ci/test.sh ${{ github.event.inputs.python }} ${{ github.event.inputs.mode }}
+        env:
+          UT_FLAGS: ${{ github.event.inputs.flags }}
+        if: ${{ ! contains(github.event.inputs.os, 'windows') }}
+      - name: Run Tox (win)
+        run: ./.config/ci/test.ps1 ${{ github.event.inputs.python }}
+        env:
+          UT_FLAGS: ${{ github.event.inputs.flags }}
+        if: ${{ contains(github.event.inputs.os, 'windows') }}
       # - name: Codecov
-      #   uses: codecov/codecov-action@v4
+      #   uses: codecov/codecov-action@v5
       #   continue-on-error: true
       #   with:
       #     token: ${{ secrets.CODECOV_TOKEN }}
