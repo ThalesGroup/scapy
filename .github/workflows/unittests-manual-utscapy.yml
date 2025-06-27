@@ -1,0 +1,54 @@
+name: Scapy unit tests (manual) / utscapy
+
+on:
+  # Inspired from https://graphite.dev/guides/manually-trigger-github-actions.
+  workflow_dispatch:
+    inputs:
+      os:
+        description: "OS"
+        required: true
+        default: "ubuntu-latest"
+      python:
+        description: "Python version"
+        required: true
+        default: "3.8"
+      mode:
+        description: "Root / non-root"
+        required: true
+        default: "non_root"
+      installmode:
+        description: "Installation mode"
+        required: true
+        default: ""
+      flags:
+        description: "UT flags"
+        required: true
+        default: " -K scanner"
+
+# Copied from 'unittests.yml'.
+# See https://docs.github.com/en/actions/how-tos/security-for-github-actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+permissions:
+  contents: read
+
+jobs:
+  utscapy:
+    runs-on: ${{ github.event.inputs.os }}
+    steps:
+      - name: Checkout Scapy
+        uses: actions/checkout@v4
+        # Codecov requires a fetch-depth > 1
+        with:
+          fetch-depth: 2
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ github.event.inputs.python }}
+      - name: Install Tox and any other packages
+        run: ./.config/ci/install.sh ${{ github.event.inputs.installmode }}
+      - name: Run Tox
+        run: UT_FLAGS="${{ github.event.inputs.flags }}" ./.config/ci/test.sh ${{ github.event.inputs.python }} ${{ github.event.inputs.mode }}
+      # - name: Codecov
+      #   uses: codecov/codecov-action@v4
+      #   continue-on-error: true
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
