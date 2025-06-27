@@ -26,7 +26,9 @@ on:
         default: " -K scanner"
 
 # Copied from 'unittests.yml'.
-# See https://docs.github.com/en/actions/how-tos/security-for-github-actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+# See:
+# - https://docs.github.com/en/actions/how-tos/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
+# - https://docs.github.com/en/actions/how-tos/security-for-github-actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
 permissions:
   contents: read
 
