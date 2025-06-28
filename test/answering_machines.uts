@@ -11,11 +11,15 @@
 from unittest import mock
 @mock.patch("scapy.ansmachine.sniff")
 def test_am(cls_name, packet_query, check_reply, mock_sniff, **kargs):
+    print(f"test_am(\n\tcls_name={cls_name!r},\n\tpacket_query={packet_query!r},\n\tcheck_reply={check_reply!r},\n\tmock_sniff={mock_sniff!r},\n\tkargs={kargs!r})")
     packet_query = packet_query.__class__(bytes(packet_query))
+    print("packet_query=")
+    packet_query.show()
     def sniff(*args,**kargs):
         kargs["prn"](packet_query)
     mock_sniff.side_effect = sniff
     am = cls_name(**kargs)
+    print(f"am={am!r}")
     called = [False]
     def _sndrpl(x):
         called[0] = True
