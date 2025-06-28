@@ -12,8 +12,10 @@ from unittest import mock
 @mock.patch("scapy.ansmachine.sniff")
 def test_am(cls_name, packet_query, check_reply, mock_sniff, **kargs):
     print(f"test_am(\n\tcls_name={cls_name!r},\n\tpacket_query={packet_query!r},\n\tcheck_reply={check_reply!r},\n\tmock_sniff={mock_sniff!r},\n\tkargs={kargs!r})")
+    print("packet_query (before rebuild)=")
+    packet_query.show()
     packet_query = packet_query.__class__(bytes(packet_query))
-    print("packet_query=")
+    print("packet_query (after rebuild)=")
     packet_query.show()
     def sniff(*args,**kargs):
         kargs["prn"](packet_query)
