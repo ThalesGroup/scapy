@@ -18,7 +18,7 @@ on:
         default: "non_root"
       installmode:
         description: "Installation mode"
-        required: true
+        required: false
         default: ""
       flags:
         description: "UT flags"
