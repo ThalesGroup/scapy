@@ -984,6 +984,7 @@ def srflood(x,  # type: _PacketIterable
         promisc=promisc, filter=filter,
         iface=iface, nofilter=nofilter,
     )
+    print(f"srflood(): Calling sndrcvflood(s={s!r}, x={x!r}, *args={args!r}, **kargs={kargs!r}")
     r = sndrcvflood(s, x, *args, **kargs)
     s.close()
     return r
