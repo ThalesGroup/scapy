@@ -312,8 +312,11 @@ class SndRcvHandler(object):
             return
         ok = False
         h = r.hashret()
+        print(f"  SndRcvHandler._process_packet(): h={h!r}")
+        print(f"  SndRcvHandler._process_packet(): self.hsent={self.hsent!r}")
         if h in self.hsent:
             hlst = self.hsent[h]
+            print(f"  SndRcvHandler._process_packet(): hlst={hlst!r}")
             for i, sentpkt in enumerate(hlst):
                 if r.answers(sentpkt):
                     self.ans.append(QueryAnswer(sentpkt, r))
@@ -328,6 +331,10 @@ class SndRcvHandler(object):
                             self.noans += 1
                         sentpkt._answered = 1
                     break
+            else:
+                print(f"  SndRcvHandler._process_packet(): no r.answers(sentpkt) is True for sentpkt in hlst")
+        else:
+            print(f"  SndRcvHandler._process_packet(): h not in self.hsent!")
         self._stop_sniffer_if_done()
         if not ok:
             if self.verbose > 1:
