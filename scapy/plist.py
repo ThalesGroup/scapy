@@ -173,7 +173,11 @@ class _PacketList(Generic[_Inner], metaclass=PacketList_metaclass):
         if isinstance(item, slice):
             return self.__class__(self.res.__getitem__(item),
                                   name="mod %s" % self.listname)
-        return self.res.__getitem__(item)
+        try:
+            return self.res.__getitem__(item)
+        except Exception as _err:
+            print(f"Error while accessing {item!r} in {self.res!r}: {_err!r}")
+            raise
 
     _T = TypeVar('_T', 'SndRcvList', 'PacketList')
 
