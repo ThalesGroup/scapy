@@ -583,16 +583,26 @@ class IP(Packet, IPTools):
         if ((self.proto == socket.IPPROTO_ICMP) and
             (isinstance(self.payload, ICMP)) and
                 (self.payload.type in [3, 4, 5, 11, 12])):
-            return self.payload.payload.hashret()
+            _res = self.payload.payload.hashret()
+            print(f"IP.hashret() -> (ICMP) {_res!r}")
+            return _res
         if not conf.checkIPinIP and self.proto in [4, 41]:  # IP, IPv6
-            return self.payload.hashret()
+            _res = self.payload.hashret()
+            print(f"IP.hashret() -> (IP, IPv6) {_res!r}")
+            return _res
         if self.dst == "224.0.0.251":  # mDNS
-            return struct.pack("B", self.proto) + self.payload.hashret()
+            _res = struct.pack("B", self.proto) + self.payload.hashret()
+            print(f"IP.hashret() -> (mDNS) {_res!r}")
+            return _res
         if conf.checkIPsrc and conf.checkIPaddr:
-            return (strxor(inet_pton(socket.AF_INET, self.src),
+            _res = (strxor(inet_pton(socket.AF_INET, self.src),
                            inet_pton(socket.AF_INET, self.dst)) +
                     struct.pack("B", self.proto) + self.payload.hashret())
-        return struct.pack("B", self.proto) + self.payload.hashret()
+            print(f"IP.hashret() -> (conf.checkIPsrc and conf.checkIPaddr) {_res!r}")
+            return _res
+        _res = struct.pack("B", self.proto) + self.payload.hashret()
+        print(f"IP.hashret() -> (default) {_res!r}")
+        return _res
 
     def answers(self, other):
         if not conf.checkIPinIP:  # skip IP in IP and IPv6 in IP
@@ -771,9 +781,13 @@ class TCP(Packet):
 
     def hashret(self):
         if conf.checkIPsrc:
-            return struct.pack("H", self.sport ^ self.dport) + self.payload.hashret()  # noqa: E501
+            _res = struct.pack("H", self.sport ^ self.dport) + self.payload.hashret()  # noqa: E501
+            print(f"TCP.hashret() -> (conf.checkIPsrc) {_res!r}")
+            return _res
         else:
-            return self.payload.hashret()
+            _res = self.payload.hashret()
+            print(f"TCP.hashret() -> (default) {_res!r}")
+            return _res
 
     def answers(self, other):
         if not isinstance(other, TCP):
