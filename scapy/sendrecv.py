@@ -307,6 +307,7 @@ class SndRcvHandler(object):
     def _process_packet(self, r):
         # type: (Packet) -> None
         """Internal function used to process each packet."""
+        print(f"SndRcvHandler._process_packet(r={r!r})")
         if r is None:
             return
         ok = False
