@@ -270,7 +270,10 @@ class SndRcvHandler(object):
                 # Populate the dictionary of _sndrcv_rcv
                 # _sndrcv_rcv won't miss the answer of a packet that
                 # has not been sent
-                self.hsent.setdefault(p.hashret(), []).append(p)
+                print(f"SndRcvHandler._sndrcv_snd(): p={p!r}")
+                h = p.hashret()
+                print(f"  SndRcvHandler._sndrcv_snd(): h={h!r}")
+                self.hsent.setdefault(h, []).append(p)
                 # Send packet
                 self.pks.send(p)
                 time.sleep(self.inter)
