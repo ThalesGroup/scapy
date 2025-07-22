@@ -1812,15 +1812,19 @@ def _test_flood(ip, flood_function, add_ether=False):
     assert x[IP].ottl() in [32, 64, 128, 255]
     assert 0 <= x[IP].hops() <= 126
 
+print("Test with srflood()")
 _test_srflood = partial(_test_flood, "www.google.com", srflood)
 retry_test(_test_srflood)
 
+print("Test with sr1flood()")
 _test_sr1flood = partial(_test_flood, "www.google.fr", sr1flood)
 retry_test(_test_sr1flood)
 
+print("Test with srpflood()")
 _test_srpflood = partial(_test_flood, "www.google.net", srpflood, True)
 retry_test(_test_srpflood)
 
+print("Test with srp1flood()")
 _test_srp1flood = partial(_test_flood, "www.google.co.uk", srp1flood, True)
 retry_test(_test_srp1flood)
 
