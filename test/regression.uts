@@ -1824,6 +1824,8 @@ retry_test(_test_srpflood)
 _test_srp1flood = partial(_test_flood, "www.google.co.uk", srp1flood, True)
 retry_test(_test_srp1flood)
 
+assert False
+
 = test chainEX
 ~ netaccess
 
