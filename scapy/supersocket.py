@@ -107,13 +107,17 @@ class SuperSocket(metaclass=_SuperSocket_metaclass):
         :param x: `Packet` to be send
         :return: Number of bytes that have been sent
         """
+        print(f"SuperSocket.send(x={x!r})")
         sx = raw(x)
+        print(f"SuperSocket.send(): sx={sx!r}")
+        print(f"SuperSocket.send(): sx=0x{sx.hex()}")
         try:
             x.sent_time = time.time()
         except AttributeError:
             pass
 
         if self.outs:
+            print(f"SuperSocket.send(): self.outs={self.outs!r}")
             return self.outs.send(sx)
         else:
             return 0
