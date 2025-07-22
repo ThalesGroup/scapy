@@ -203,10 +203,14 @@ class SuperSocket(metaclass=_SuperSocket_metaclass):
         :return: The received `Packet` object, or None
         """
         cls, val, ts = self.recv_raw(x)
+        print(f"SuperSocket.recv(): cls={cls!r}")
+        print(f"SuperSocket.recv(): val={val!r}")
+        print(f"SuperSocket.recv(): ts={ts!r}")
         if not val or not cls:
             return None
         try:
             pkt = cls(val, **kwargs)  # type: Packet
+            print(f"SuperSocket.recv(): pkt={pkt!r}")
         except KeyboardInterrupt:
             raise
         except Exception:
