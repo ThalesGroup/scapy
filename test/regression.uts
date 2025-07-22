@@ -1806,10 +1806,14 @@ def _test_flood(ip, flood_function, add_ether=False):
             p = Ether()/p
         p.show2()
         x = flood_function(p, timeout=0.5, maxretries=10)
+        print(f"  _test_flood(): x={x!r}")
     if type(x) == tuple:
         x = x[0][0][1]
+        print(f"  _test_flood(): x={x!r}")
     x
+    print(f"  _test_flood(): x[IP].ottl()={x[IP].ottl()!r}")
     assert x[IP].ottl() in [32, 64, 128, 255]
+    print(f"  _test_flood(): x[IP].hops()={x[IP].hops()!r}")
     assert 0 <= x[IP].hops() <= 126
 
 print("Test with srflood()")
