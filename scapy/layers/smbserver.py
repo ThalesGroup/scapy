@@ -771,6 +771,10 @@ class SMB_Server(Automaton):
     def send_tree_connect_response(self, pkt, tree_name):
         self.update_smbheader(pkt)
         # Check the tree name against the shares we're serving
+        self.vprint(f"SMB_Server.send_tree_connect_response(): self.shares={self.shares!r}")
+        for i, x in enumerate(self.shares):
+            self.vprint(f"SMB_Server.send_tree_connect_response():   self.shares[{i}]._name={x._name!r}")
+        self.vprint(f"SMB_Server.send_tree_connect_response(): tree_name.lower()={tree_name.lower()!r}")
         if not any(x._name == tree_name.lower() for x in self.shares):
             # Unknown tree
             resp = self.smb_header.copy() / SMB2_Error_Response()
