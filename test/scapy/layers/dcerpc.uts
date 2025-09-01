@@ -772,6 +772,8 @@ resp = client.sr1_req(req)
 assert isinstance(resp.valueof("WkstaInfo"), LPWKSTA_INFO_100)
 assert resp.valueof("WkstaInfo").valueof("wki100_computername") == b"NiceServer"
 
+assert False, "TMP"
+
 = Functional: Start an endpoint mapper for NCACN_IP_TCP
 ~ linux samba needs_root
 
@@ -876,6 +878,8 @@ resp = client.sr1_req(req)
 assert isinstance(resp.valueof("WkstaInfo"), LPWKSTA_INFO_100)
 assert resp.valueof("WkstaInfo").valueof("wki100_computername") == b"NiceServer"
 
+assert False, "TMP"
+
 = Functional: Close the server
 
 # Close everything now
@@ -925,6 +929,8 @@ rpcserver.close()
 assert isinstance(resp.valueof("WkstaInfo"), LPWKSTA_INFO_100)
 assert resp.valueof("WkstaInfo").valueof("wki100_computername") == b"NiceServer"
 
+assert False, "TMP"
+
 = Functional: Re-Start the same MS-RPC server over NCACN_NP with SPNEGOSSP+NTLMSSP
 
 from scapy.layers.spnego import SPNEGOSSP
@@ -949,6 +955,8 @@ rpcserver = MyRPCServer.spawn(
     bg=True,
 )
 
+assert False, "TMP"
+
 = Functional: Connect to it with DCERPC_Client over NCACN_NP with NTLMSSP
 
 client = DCERPC_Client(
@@ -970,12 +978,16 @@ resp = client.sr1_req(req)
 assert isinstance(resp.valueof("WkstaInfo"), LPWKSTA_INFO_100)
 assert resp.valueof("WkstaInfo").valueof("wki100_computername") == b"NiceServer"
 
+assert False, "TMP"
+
 = Functional: Connect to the server with samba's rpcclient over NCACN_NP with NTLMSSP
 ~ linux samba
 
 result = run_rpcclient("ncacn_np", "wkssvc_enumeratecomputernames")
 print(result.decode())
 assert b"Scapy" in result
+
+assert False, "TMP"
 
 = Functional: Close the server
 
