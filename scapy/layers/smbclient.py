@@ -704,7 +704,9 @@ class SMB_SOCKET(SuperSocket):
         """
         Send a TreeConnect request
         """
-        resp = self.ins.sr1(
+        print(f"SMB_CONNECT.tree_connect(): self.ins={self.ins!r}")
+        print(f"SMB_CONNECT.tree_connect(): self.ins.sr1={self.ins.sr1!r}")
+        _request = \
             SMB2_Tree_Connect_Request(
                 Buffer=[
                     (
@@ -716,10 +718,15 @@ class SMB_SOCKET(SuperSocket):
                         ),
                     )
                 ]
-            ),
+            )
+        print(f"SMB_CONNECT.tree_connect(): _request={_request!r}")
+        _request.show()
+        resp = self.ins.sr1(
+            _request,
             verbose=False,
             timeout=self.timeout,
         )
+        print(f"SMB_CONNECT.tree_connect(): resp={resp!r}")
         if not resp:
             raise ValueError("TreeConnect timed out !")
         if SMB2_Tree_Connect_Response not in resp:
