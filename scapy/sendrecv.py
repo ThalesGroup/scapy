@@ -274,6 +274,10 @@ class SndRcvHandler(object):
                 # has not been sent
                 self.hsent.setdefault(p.hashret(), []).append(p)
                 # Send packet
+                print(f"SndRcvHandler._sndrcv_snd(): self.pks={self.pks!r}")
+                print(f"SndRcvHandler._sndrcv_snd(): self.pks.send={self.pks.send!r}")
+                print(f"SndRcvHandler._sndrcv_snd(): p={p!r}")
+                p.show()
                 self.pks.send(p)
                 time.sleep(self.inter)
                 if self.breakout.is_set():
