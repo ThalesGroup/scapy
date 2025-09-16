@@ -197,6 +197,7 @@ class ObjectPipe(Generic[_T]):
 
     def send(self, obj):
         # type: (_T) -> int
+        print(f"ObjectPipe.send(): obj={obj!r}")
         self.__queue.append(obj)
         if WINDOWS:
             self._winset()
@@ -1267,6 +1268,9 @@ class Automaton(metaclass=Automaton_metaclass):
                     self.packets.append(args[0])
             for action in self.actions[cond.atmt_condname]:
                 self.debug(2, "   + Running action [%s]" % action.__name__)
+                print(f"Automaton._run_condition(): action={action!r}")
+                print(f"Automaton._run_condition(): state_req.action_args={state_req.action_args!r}")
+                print(f"Automaton._run_condition(): state_req.action_kargs={state_req.action_kargs!r}")
                 action(self, *state_req.action_args, **state_req.action_kargs)
             raise
         except Exception as e:
@@ -1434,6 +1438,7 @@ class Automaton(metaclass=Automaton_metaclass):
                         elif fd == self.listen_sock:
                             try:
                                 pkt = self.listen_sock.recv()
+                                print(f"Automaton._do_iter(): pkt={pkt!r}")
                             except EOFError:
                                 # Socket was closed abruptly. This will likely only
                                 # ever happen when a client socket is passed to the
