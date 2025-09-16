@@ -187,6 +187,8 @@ class SndRcvHandler(object):
                 # Start routine with callback
                 interrupted = None
                 try:
+                    print(f"SndRcvHandler.__init__(): self._sndrcv_rcv={self._sndrcv_rcv!r}")
+                    print(f"SndRcvHandler.__init__(): snd_thread.start={snd_thread.start!r}")
                     self._sndrcv_rcv(snd_thread.start)
                 except KeyboardInterrupt as ex:
                     interrupted = ex
