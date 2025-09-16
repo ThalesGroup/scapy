@@ -668,6 +668,8 @@ class _ATMT_supersocket(SuperSocket):
 
     def send(self, s):
         # type: (Any) -> int
+        print(f"_ATMT_supersocket.send(): self.spa={self.spa!r}")
+        print(f"_ATMT_supersocket.send(): self.spa.send={self.spa.send!r}")
         return self.spa.send(s)
 
     def fileno(self):
