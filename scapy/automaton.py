@@ -487,12 +487,16 @@ class ATMT:
             self.final = state_func.atmt_final
             Exception.__init__(self, "Request state [%s]" % self.state)
             self.automaton = automaton
+            print(f"ATMT.NewStateRequested.__init__(): args={args!r}")
+            print(f"ATMT.NewStateRequested.__init__(): kargs={kargs!r}")
             self.args = args
             self.kargs = kargs
             self.action_parameters()  # init action parameters
 
         def action_parameters(self, *args, **kargs):
             # type: (Any, Any) -> ATMT.NewStateRequested
+            print(f"ATMT.NewStateRequested.action_parameters(): args={args!r}")
+            print(f"ATMT.NewStateRequested.action_parameters(): kargs={kargs!r}")
             self.action_args = args
             self.action_kargs = kargs
             return self
