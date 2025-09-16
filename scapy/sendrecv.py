@@ -343,6 +343,11 @@ class SndRcvHandler(object):
         # This is blocking.
         self.sniffer = None  # type: Optional[AsyncSniffer]
         self.sniffer = AsyncSniffer()
+        print(f"SndRcvHandler._sndrcv_rcv(): self._process_packet={self._process_packet!r}")
+        print(f"SndRcvHandler._sndrcv_rcv(): self.rcv_pks={self.rcv_pks!r}")
+        print(f"SndRcvHandler._sndrcv_rcv(): self.session={self.session!r}")
+        print(f"SndRcvHandler._sndrcv_rcv(): self.stop_filter={self.stop_filter!r}")
+        print(f"SndRcvHandler._sndrcv_rcv(): started_callback=callback={callback!r}")
         self.sniffer._run(
             prn=self._process_packet,
             timeout=None if self.threaded and not self._flood else self.timeout,
