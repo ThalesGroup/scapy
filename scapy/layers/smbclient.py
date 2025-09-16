@@ -721,6 +721,8 @@ class SMB_SOCKET(SuperSocket):
             )
         print(f"SMB_CONNECT.tree_connect(): _request={_request!r}")
         _request.show()
+        print(f"SMB_CONNECT.tree_connect(): self.ins={self.ins!r}")
+        print(f"SMB_CONNECT.tree_connect(): self.ins.sr1={self.ins.sr1!r}")
         resp = self.ins.sr1(
             _request,
             verbose=False,
