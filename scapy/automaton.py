@@ -197,7 +197,7 @@ class ObjectPipe(Generic[_T]):
 
     def send(self, obj):
         # type: (_T) -> int
-        print(f"ObjectPipe.send(): obj={obj!r}")
+        # print(f"ObjectPipe.send(): obj={obj!r}")
         self.__queue.append(obj)
         if WINDOWS:
             self._winset()
@@ -487,17 +487,17 @@ class ATMT:
             self.final = state_func.atmt_final
             Exception.__init__(self, "Request state [%s]" % self.state)
             self.automaton = automaton
-            print(f"ATMT.NewStateRequested.__init__(): args={args!r}")
-            print(f"ATMT.NewStateRequested.__init__(): kargs={kargs!r}")
+            # print(f"ATMT.NewStateRequested.__init__(): args={args!r}")
+            # print(f"ATMT.NewStateRequested.__init__(): kargs={kargs!r}")
             self.args = args
             self.kargs = kargs
             self.action_parameters()  # init action parameters
 
         def action_parameters(self, *args, **kargs):
             # type: (Any, Any) -> ATMT.NewStateRequested
-            print(f"ATMT.NewStateRequested.action_parameters(): args={args!r}")
-            print(f"ATMT.NewStateRequested.action_parameters(): kargs={kargs!r}")
             if args and (args[-1] == 'IPC$'):
+                print(f"ATMT.NewStateRequested.action_parameters(): args={args!r}")
+                print(f"ATMT.NewStateRequested.action_parameters(): kargs={kargs!r}")
                 print(f"ATMT.NewStateRequested.action_parameters(): Traceback:")
                 for _tb_item in traceback.extract_stack():
                     print(f"ATMT.NewStateRequested.action_parameters():   {_tb_item!r}")
@@ -677,8 +677,8 @@ class _ATMT_supersocket(SuperSocket):
 
     def send(self, s):
         # type: (Any) -> int
-        print(f"_ATMT_supersocket.send(): self.spa={self.spa!r}")
-        print(f"_ATMT_supersocket.send(): self.spa.send={self.spa.send!r}")
+        # print(f"_ATMT_supersocket.send(): self.spa={self.spa!r}")
+        # print(f"_ATMT_supersocket.send(): self.spa.send={self.spa.send!r}")
         return self.spa.send(s)
 
     def fileno(self):
@@ -1276,9 +1276,10 @@ class Automaton(metaclass=Automaton_metaclass):
                     self.packets.append(args[0])
             for action in self.actions[cond.atmt_condname]:
                 self.debug(2, "   + Running action [%s]" % action.__name__)
-                print(f"Automaton._run_condition(): action={action!r}")
-                print(f"Automaton._run_condition(): state_req.action_args={state_req.action_args!r}")
-                print(f"Automaton._run_condition(): state_req.action_kargs={state_req.action_kargs!r}")
+                if repr(action).startswith("<function SMB_Server.send_tree_connect_response"):
+                    print(f"Automaton._run_condition(): action={action!r}")
+                    print(f"Automaton._run_condition(): state_req.action_args={state_req.action_args!r}")
+                    print(f"Automaton._run_condition(): state_req.action_kargs={state_req.action_kargs!r}")
                 action(self, *state_req.action_args, **state_req.action_kargs)
             raise
         except Exception as e:
