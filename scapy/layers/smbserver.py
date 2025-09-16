@@ -770,6 +770,10 @@ class SMB_Server(Automaton):
     @ATMT.action(receive_tree_connect)
     def send_tree_connect_response(self, pkt, tree_name):
         self.update_smbheader(pkt)
+        self.vprint(f"SMB_Server.send_tree_connect_response(): Traceback:")
+        import traceback
+        for _tb_item in traceback.extract_stack():
+            self.vprint(f"SMB_Server.send_tree_connect_response():   {_tb_item!r}")
         # Check the tree name against the shares we're serving
         self.vprint(f"SMB_Server.send_tree_connect_response(): self.shares={self.shares!r}")
         for i, x in enumerate(self.shares):
