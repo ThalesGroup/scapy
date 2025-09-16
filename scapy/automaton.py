@@ -497,6 +497,10 @@ class ATMT:
             # type: (Any, Any) -> ATMT.NewStateRequested
             print(f"ATMT.NewStateRequested.action_parameters(): args={args!r}")
             print(f"ATMT.NewStateRequested.action_parameters(): kargs={kargs!r}")
+            if args and (args[-1] == 'IPC$'):
+                print(f"ATMT.NewStateRequested.action_parameters(): Traceback:")
+                for _tb_item in traceback.extract_stack():
+                    print(f"ATMT.NewStateRequested.action_parameters():   {_tb_item!r}")
             self.action_args = args
             self.action_kargs = kargs
             return self
