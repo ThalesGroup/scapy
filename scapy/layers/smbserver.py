@@ -764,7 +764,10 @@ class SMB_Server(Automaton):
     @ATMT.receive_condition(SERVING)
     def receive_tree_connect(self, pkt):
         if SMB2_Tree_Connect_Request in pkt:
+            self.vprint(f"SMB_Server.receive_tree_connect(): pkt={pkt!r}")
+            pkt.show()
             tree_name = pkt[SMB2_Tree_Connect_Request].Path.split("\\")[-1]
+            self.vprint(f"SMB_Server.receive_tree_connect(): tree_name={tree_name!r}")
             raise self.SERVING().action_parameters(pkt, tree_name)
 
     @ATMT.action(receive_tree_connect)
