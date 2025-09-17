@@ -197,7 +197,9 @@ class ObjectPipe(Generic[_T]):
 
     def send(self, obj):
         # type: (_T) -> int
-        # print(f"ObjectPipe.send(): obj={obj!r}")
+        from scapy.layers.smb2 import SMB2_Tree_Connect_Request
+        if isinstance(obj, Packet) and obj.haslayer(SMB2_Tree_Connect_Request):
+            print(f"ObjectPipe.send(): obj={obj!r}")
         self.__queue.append(obj)
         if WINDOWS:
             self._winset()
@@ -677,8 +679,9 @@ class _ATMT_supersocket(SuperSocket):
 
     def send(self, s):
         # type: (Any) -> int
-        # print(f"_ATMT_supersocket.send(): self.spa={self.spa!r}")
-        # print(f"_ATMT_supersocket.send(): self.spa.send={self.spa.send!r}")
+        from scapy.layers.smb2 import SMB2_Tree_Connect_Request
+        if isinstance(s, Packet) and s.haslayer(SMB2_Tree_Connect_Request):
+            print(f"_ATMT_supersocket.send(): s={s!r}")
         return self.spa.send(s)
 
     def fileno(self):
@@ -1447,7 +1450,9 @@ class Automaton(metaclass=Automaton_metaclass):
                         elif fd == self.listen_sock:
                             try:
                                 pkt = self.listen_sock.recv()
-                                # print(f"Automaton._do_iter(): pkt={pkt!r}")
+                                from scapy.layers.smb2 import SMB2_Tree_Connect_Request
+                                if pkt.haslayer(SMB2_Tree_Connect_Request):
+                                    print(f"Automaton._do_iter(): pkt={pkt!r}")
                             except EOFError:
                                 # Socket was closed abruptly. This will likely only
                                 # ever happen when a client socket is passed to the
