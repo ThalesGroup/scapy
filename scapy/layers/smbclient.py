@@ -650,7 +650,11 @@ class SMB_Client(Automaton):
 
     @ATMT.action(outgoing_data_received_smb)
     def send_data(self, d):
-        self.send(self.smb_header.copy() / d)
+        print(f"SMB_Client.send_data(): self.smb_header={self.smb_header!r}")
+        print(f"SMB_Client.send_data(): d={d!r}")
+        _s = self.smb_header.copy() / d
+        print(f"SMB_Client.send_data(): self.smb_header.copy() / d = {_s!r}")
+        self.send(_s)
 
 
 class SMB_SOCKET(SuperSocket):
