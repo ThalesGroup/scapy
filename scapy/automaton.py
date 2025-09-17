@@ -1231,6 +1231,9 @@ class Automaton(metaclass=Automaton_metaclass):
 
     def send(self, pkt, **kwargs):
         # type: (Packet, **Any) -> None
+        from scapy.layers.smb2 import SMB2_Tree_Connect_Request
+        if pkt.haslayer(SMB2_Tree_Connect_Request):
+            print(f"Automaton.send(): pkt={pkt!r}")
         if self.state.state in self.interception_points:
             self.debug(3, "INTERCEPT: packet intercepted: %s" % pkt.summary())
             self.intercepted_packet = pkt
@@ -1248,6 +1251,8 @@ class Automaton(metaclass=Automaton_metaclass):
                 return
             elif cmd.type == _ATMT_Command.REPLACE:
                 pkt = cmd.pkt
+                if pkt.haslayer(SMB2_Tree_Connect_Request):
+                    print(f"Automaton.send(): _ATMT_Command.REPLACE => pkt={pkt!r}")
                 self.debug(3, "INTERCEPT: packet replaced by: %s" % pkt.summary())  # noqa: E501
             elif cmd.type == _ATMT_Command.ACCEPT:
                 self.debug(3, "INTERCEPT: packet accepted")
