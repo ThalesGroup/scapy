@@ -768,6 +768,10 @@ class SMB_Server(Automaton):
             pkt.show()
             tree_name = pkt[SMB2_Tree_Connect_Request].Path.split("\\")[-1]
             self.vprint(f"SMB_Server.receive_tree_connect(): tree_name={tree_name!r}")
+            self.vprint("SMB_Server.receive_tree_connect(): Traceback:")
+            import traceback
+            for _tb_item in traceback.extract_stack():
+                print(f"SMB_Server.receive_tree_connect():   {_tb_item!r}")
             raise self.SERVING().action_parameters(pkt, tree_name)
 
     @ATMT.action(receive_tree_connect)
