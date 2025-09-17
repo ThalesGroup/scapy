@@ -187,8 +187,8 @@ class SndRcvHandler(object):
                 # Start routine with callback
                 interrupted = None
                 try:
-                    print(f"SndRcvHandler.__init__(): self._sndrcv_rcv={self._sndrcv_rcv!r}")
-                    print(f"SndRcvHandler.__init__(): snd_thread.start={snd_thread.start!r}")
+                    # print(f"SndRcvHandler.__init__(): self._sndrcv_rcv={self._sndrcv_rcv!r}")
+                    # print(f"SndRcvHandler.__init__(): snd_thread.start={snd_thread.start!r}")
                     self._sndrcv_rcv(snd_thread.start)
                 except KeyboardInterrupt as ex:
                     interrupted = ex
@@ -274,9 +274,9 @@ class SndRcvHandler(object):
                 # has not been sent
                 self.hsent.setdefault(p.hashret(), []).append(p)
                 # Send packet
-                print(f"SndRcvHandler._sndrcv_snd(): self.pks={self.pks!r}")
-                print(f"SndRcvHandler._sndrcv_snd(): self.pks.send={self.pks.send!r}")
-                print(f"SndRcvHandler._sndrcv_snd(): p={p!r}")
+                # print(f"SndRcvHandler._sndrcv_snd(): self.pks={self.pks!r}")
+                # print(f"SndRcvHandler._sndrcv_snd(): self.pks.send={self.pks.send!r}")
+                # print(f"SndRcvHandler._sndrcv_snd(): p={p!r}")
                 p.show()
                 self.pks.send(p)
                 time.sleep(self.inter)
@@ -347,11 +347,11 @@ class SndRcvHandler(object):
         # This is blocking.
         self.sniffer = None  # type: Optional[AsyncSniffer]
         self.sniffer = AsyncSniffer()
-        print(f"SndRcvHandler._sndrcv_rcv(): self._process_packet={self._process_packet!r}")
-        print(f"SndRcvHandler._sndrcv_rcv(): self.rcv_pks={self.rcv_pks!r}")
-        print(f"SndRcvHandler._sndrcv_rcv(): self.session={self.session!r}")
-        print(f"SndRcvHandler._sndrcv_rcv(): self.stop_filter={self.stop_filter!r}")
-        print(f"SndRcvHandler._sndrcv_rcv(): started_callback=callback={callback!r}")
+        # print(f"SndRcvHandler._sndrcv_rcv(): self._process_packet={self._process_packet!r}")
+        # print(f"SndRcvHandler._sndrcv_rcv(): self.rcv_pks={self.rcv_pks!r}")
+        # print(f"SndRcvHandler._sndrcv_rcv(): self.session={self.session!r}")
+        # print(f"SndRcvHandler._sndrcv_rcv(): self.stop_filter={self.stop_filter!r}")
+        # print(f"SndRcvHandler._sndrcv_rcv(): started_callback=callback={callback!r}")
         self.sniffer._run(
             prn=self._process_packet,
             timeout=None if self.threaded and not self._flood else self.timeout,

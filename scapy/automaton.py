@@ -1447,7 +1447,7 @@ class Automaton(metaclass=Automaton_metaclass):
                         elif fd == self.listen_sock:
                             try:
                                 pkt = self.listen_sock.recv()
-                                print(f"Automaton._do_iter(): pkt={pkt!r}")
+                                # print(f"Automaton._do_iter(): pkt={pkt!r}")
                             except EOFError:
                                 # Socket was closed abruptly. This will likely only
                                 # ever happen when a client socket is passed to the

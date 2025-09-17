@@ -704,8 +704,8 @@ class SMB_SOCKET(SuperSocket):
         """
         Send a TreeConnect request
         """
-        print(f"SMB_CONNECT.tree_connect(): self.ins={self.ins!r}")
-        print(f"SMB_CONNECT.tree_connect(): self.ins.sr1={self.ins.sr1!r}")
+        # print(f"SMB_CONNECT.tree_connect(): self.ins={self.ins!r}")
+        # print(f"SMB_CONNECT.tree_connect(): self.ins.sr1={self.ins.sr1!r}")
         _request = \
             SMB2_Tree_Connect_Request(
                 Buffer=[
