@@ -1234,6 +1234,10 @@ class Automaton(metaclass=Automaton_metaclass):
         from scapy.layers.smb2 import SMB2_Tree_Connect_Request
         if pkt.haslayer(SMB2_Tree_Connect_Request):
             print(f"Automaton.send(): pkt={pkt!r}")
+            import traceback
+            print(f"Automaton.send(): Traceback:")
+            for _tb_item in traceback.extract_stack():
+                print(f"Automaton.send():   {_tb_item!r}")
         if self.state.state in self.interception_points:
             self.debug(3, "INTERCEPT: packet intercepted: %s" % pkt.summary())
             self.intercepted_packet = pkt
