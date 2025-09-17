@@ -651,9 +651,12 @@ class SMB_Client(Automaton):
     @ATMT.action(outgoing_data_received_smb)
     def send_data(self, d):
         print(f"SMB_Client.send_data(): self.smb_header={self.smb_header!r}")
+        print(f"SMB_Client.send_data(): self.smb_header.build()=0x{self.smb_header.copy().build().hex()}")
         print(f"SMB_Client.send_data(): d={d!r}")
+        print(f"SMB_Client.send_data(): d.build()=0x{d.copy().build().hex()}")
         _s = self.smb_header.copy() / d
         print(f"SMB_Client.send_data(): self.smb_header.copy() / d = {_s!r}")
+        print(f"SMB_Client.send_data():                   .build() = 0x{_s.copy().build().hex()!r}")
         self.send(_s)
 
 
